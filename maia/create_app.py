@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask
+from flask import Flask, session, redirect, url_for, render_template
 
 
 def create_app(test_config=None):
@@ -35,11 +35,28 @@ def create_app(test_config=None):
     # Import blog blueprint
     from . import blog
     app.register_blueprint(blog.bp)
-    app.add_url_rule('/', endpoint='index')
+
+    from .modules import weather
+    app.register_blueprint(weather.bp)
 
     # a simple page that says hello
     @app.route('/hello')
     def hello():
         return 'Hello, World!'
+    
+    @app.route('/michi')
+    def michi():
+        return "Ciao michi, ti voglio bene!!"
+
+    @app.endpoint("index")
+    def home():
+        user_id = session.get('user_id')
+        if user_id is None:
+            print("not logged in")
+            return redirect(url_for("auth.login"))
+        else:
+            print("logged in")
+            return render_template('index.html')
+    app.add_url_rule("/",endpoint="index" )
 
     return app
