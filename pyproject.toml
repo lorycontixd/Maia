@@ -1,0 +1,11 @@
+[project]
+name = "Maia"
+version = "0.0.1"
+description = "Personal intelligent assistant with blog incorporation"
+dependencies = [
+    "flask",
+]
+
+[build-system]
+requires = ["flit_core<4"]
+build-backend = "flit_core.buildapi"
