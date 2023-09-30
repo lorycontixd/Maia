@@ -32,7 +32,9 @@ def create_app(test_config=None):
     from . import auth
     app.register_blueprint(auth.bp)
 
-    
+    @app.route('/')
+    def mainpage():
+        return "This is the home page!!"
 
     # a simple page that says hello
     @app.route('/hello')
